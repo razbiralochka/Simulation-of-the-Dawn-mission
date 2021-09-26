@@ -1,7 +1,7 @@
 import numpy as np
 import math as m
 import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D
+
 
 
 DawnData=np.genfromtxt('DawnFull_tb.txt')*1000
@@ -52,10 +52,10 @@ Vmars=[2.239956000086868E+01, 1.417958296152212E+01]
 
 phiV=m.sqrt(V0[0]*V0[0]+V0[1]*V0[1])
 print(phiV)
-rV=-100;
+rV=0;
 
 m0=747.1+425+45.6
-F0=3*50*0.001
+F0=3*50*0.000
 
 c0=26000
 a0=F0/m0
@@ -64,25 +64,25 @@ fuel = 425
 k = np.zeros(4)
 q = np.zeros(4)
 day = 1
-time=0;
-dtime = 36*24
+day=0;
+dday = 1
 mas=747.1+fuel+45.6
-while time < 510*24*3600:
+while day < 510:
     CalcX.append(radius*m.cos(angle))
     CalcY.append(radius*m.sin(angle))
     a = F0/mas
-    ##print(a)
+    
     A=(phiV*phiV)/radius
     B=1/(radius*radius)
-    rV=rV+dtime*(A-B+0.866*a)
+    rV=rV+dday*25*3600*(A-B+0.866*a)
     A=-(phiV*rV)/radius
-    phiV = phiV + dtime * (A+1*a)
-    radius = radius + dtime * rV  
-    angle = angle + dtime * (phiV/radius)
-    mas = mas - dtime * consumption
+    phiV = phiV + dday *25*3600* (A+1*a)
+    radius = radius + dday *25*3600* rV  
+    angle = angle + dday *25*3600* (phiV/radius)
+    mas = mas - dday *25*3600* consumption
    
     
-    time = time + dtime 
+    day = day + dday 
     
      
 
