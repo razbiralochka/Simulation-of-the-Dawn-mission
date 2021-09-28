@@ -19,7 +19,7 @@ CalcX=[]
 CalcY=[]
 Thrust=np.zeros(2714)
 LambdMas=np.zeros(2714)
-
+days=np.arange(2714)+1
 
 
 
@@ -127,7 +127,7 @@ while day > 509 and day < 1357:
     CalcX.append(radius*m.cos(angle))
     CalcY.append(radius*m.sin(angle))
     F0=3*50*0.000
-    lambd=m.pi/2-m.pi/2
+    lambd=m.pi/2
     if day > 723 and day <1250:
         F0=3*90*0.001 * pow((radius0/radius),2)      
         lambd=m.pi/2+m.pi/200
@@ -151,6 +151,8 @@ print(mas-747.1-45.6)
 
 ##around the Vesta
 while day > 1356 and day < 1804:
+     lambd=m.pi/2
+     LambdMas[day-1]=lambd
      CalcX.append(X[day])
      CalcY.append(Y[day])
      day = day + dday
@@ -231,10 +233,24 @@ plt.axis('equal')
 plt.show()
 
 
-plt.plot(Thrust);
-plt.show();
-plt.plot(LambdMas*180/m.pi);
-plt.show();
+fig, ax1 = plt.subplots()
+ax2 = ax1.twinx()
+ax1.plot(days,Thrust,'red')
+ax2.plot(days,LambdMas*180/m.pi,'blue')
+ 
+ax1.set_xlabel("X data")
+ax1.set_ylabel("Тяга, мН",color='Red')
+ 
+ax2.set_ylabel("угол поворота, гр",color='b')
+plt.xlim([1, 2714])
+plt.show()
+
+
+
+
+
+
+
 
 
 
