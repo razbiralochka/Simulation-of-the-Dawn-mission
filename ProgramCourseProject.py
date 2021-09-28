@@ -210,25 +210,25 @@ print(mas-747.1-45.6)
 
 
 
-plt.plot(X,Y,color='black');
+plt.plot(X,Y,color='black',label='Траектория КА Dawn JPL');
 
-##plt.plot(EarthX,EarthY,color='green')
+plt.plot(EarthX,EarthY,color='green',label='Орбита Земли')
 plt.scatter(X[1],Y[1], color='green', s=40, marker='o')
 
-##plt.plot(CeresX,CeresY,color='blue')
+plt.plot(CeresX,CeresY,color='blue',label='Орбита Цереры')
 plt.scatter(CeresX[2715],CeresY[2715], color='blue', s=40, marker='o')
 
-##plt.plot(VestaX,VestaY,color='cyan')
+plt.plot(VestaX,VestaY,color='cyan',label='Орбита Весты')
 plt.scatter(VestaX[-1],VestaY[-1], color='cyan', s=40, marker='o')
 plt.scatter(X[1804],Y[1804], color='cyan', s=40, marker='x')
-##plt.plot(MarsX,MarsY,color='red')
+plt.plot(MarsX,MarsY,color='red',label='Орбита Марса')
 plt.scatter(MarsX[-1],MarsY[-1], color='red', s=40, marker='o')
 
-plt.plot(CalcX,CalcY,color='orange');
+plt.plot(CalcX,CalcY,color='orange',label='Траектория КА Dawn Рассчёт');
 
 plt.axis('equal')
 
-
+plt.legend(loc=2)
 ##plt.grid()
 plt.show()
 
@@ -244,13 +244,3 @@ ax1.set_ylabel("Тяга, мН",color='Red')
 ax2.set_ylabel("угол поворота, гр",color='b')
 plt.xlim([1, 2714])
 plt.show()
-
-
-
-
-
-
-
-
-
-
