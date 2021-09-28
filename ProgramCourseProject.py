@@ -17,6 +17,11 @@ Z=DawnData[:,2]
 
 CalcX=[]
 CalcY=[]
+Thrust=np.zeros(2714)
+LambdMas=np.zeros(2714)
+
+
+
 
 ##Earth JPL coords
 EarthX=EarthData[:,0]
@@ -43,6 +48,8 @@ CeresZ=CeresData[:,2]
 SunParam=132712440018*pow(10,9);
 
 radius = m.sqrt(X[0]*X[0]+Y[0]*Y[0])
+radius0 = radius
+print(radius0)
 angle = m.atan(Y[0]/X[0])
 
 V0=np.array([-3.267334027266680E+00,3.345804245220296E+01])*1000
@@ -87,7 +94,8 @@ while day < 510:
     if day > 300 and day <400:
         F0=3*50*0.001       
         lambd=m.pi/2+m.pi/3
-    
+    LambdMas[day-1]=lambd
+    Thrust[day-1]=F0
     a = F0/mas
     consumption=F0/c0
     
@@ -120,7 +128,8 @@ while day > 509 and day < 1357:
         F0=3*50*0.001      
         lambd=m.pi/2
     
-    
+    LambdMas[day-1]=lambd
+    Thrust[day-1]=F0
     a = F0/mas
     consumption=F0/c0
     
@@ -164,7 +173,8 @@ while day > 1803 and day < 2715:
         F0=3*50*0.001   
         lambd=m.pi/2-m.pi/100
    
-    
+    LambdMas[day-1]=lambd
+    Thrust[day-1]=F0
     a = F0/mas
     consumption=F0/c0
     
@@ -177,21 +187,18 @@ while day > 1803 and day < 2715:
 print(mas) 
 
 
-
+print(len(CalcX))
 
 
 
 plt.plot(X,Y,color='black');
-##plt.plot(CeresX,CeresY,color='blue')
+plt.plot(CeresX,CeresY,color='blue')
 plt.scatter(CeresX[2715],CeresY[2715], color='blue', s=40, marker='o')
 
-plt.plot(EarthX,EarthY,color='green')
-plt.scatter(X[0],Y[0], color='green', s=40, marker='o')
-
-##plt.plot(VestaX,VestaY,color='cyan')
+plt.plot(VestaX,VestaY,color='cyan')
 plt.scatter(VestaX[-1],VestaY[-1], color='cyan', s=40, marker='o')
 plt.scatter(X[1804],Y[1804], color='cyan', s=40, marker='x')
-##plt.plot(MarsX,MarsY,color='red')
+plt.plot(MarsX,MarsY,color='red')
 plt.scatter(MarsX[-1],MarsY[-1], color='red', s=40, marker='o')
 
 plt.plot(CalcX,CalcY,color='orange');
@@ -199,8 +206,14 @@ plt.plot(CalcX,CalcY,color='orange');
 plt.axis('equal')
 
 
-
-
-
 ##plt.grid()
 plt.show()
+
+
+plt.plot(Thrust);
+plt.show();
+plt.plot(LambdMas);
+plt.show();
+
+
+
