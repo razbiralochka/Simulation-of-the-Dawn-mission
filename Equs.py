@@ -112,35 +112,39 @@ class calcs_class():
             jac = np.zeros((4,4))
             err = 1000
             i = 1
+            k = 1
+            d = 0.1
+            out = -self.calc(inp)
+            min_err = np.linalg.norm(self.calc(inp))
             while err > 0.05:
-                k = 1
-                d = 1e-0
+
                 h = d * np.diag(np.full(4, 1))
                 i+=1
-                out = -self.calc(inp)
-                prev_err = np.linalg.norm(self.calc(inp))
-                print("iter: ", i, " err ", prev_err)
+                print("iter: ", i, " err ", min_err)
                 print(out)
                 print(inp)
                 jac[:, 0] = (self.calc(inp + h[0]) - self.calc(inp)- h[0]) / 2 * d
                 jac[:, 1] = (self.calc(inp + h[1]) - self.calc(inp)- h[1]) / 2 * d
                 jac[:, 2] = (self.calc(inp + h[2]) - self.calc(inp)- h[2]) / 2 * d
                 jac[:, 3] = (self.calc(inp + h[3]) - self.calc(inp)- h[3]) / 2 * d
-
-
-
                 LU = scipy.linalg.lu_factor(jac)
                 darg = scipy.linalg.lu_solve(LU, out)
                 inp += k*darg/np.linalg.norm(darg)
                 err = np.linalg.norm(self.calc(inp))
-                if err > prev_err:
+                if err < min_err:
+                    min_err = err
+                else:
                     inp -= k * darg / np.linalg.norm(darg)
-                    k/=2
+                    k*=0.75
                     inp += k * darg / np.linalg.norm(darg)
 
                 if k < 1e-5:
-                    d /= 2
-                    break
+                    k = 1
+                    d *=0.75
 
+                if d < 1e-8:
+                    inp = np.random.uniform(-1, 1, 4)
+                    d = 1
+                    k = 1
             print(inp)
             return inp
